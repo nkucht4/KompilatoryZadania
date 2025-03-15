@@ -1,4 +1,4 @@
-from sys import argv
+import sys
 import json
 
 class Scanner:
@@ -12,25 +12,30 @@ class Scanner:
             symbol = file.read(1)
             if not symbol:
                 break
-            ##print(symbol)
+            self.next(symbol, file)
         file.close()
 
-    def next(self, symbol, col_nr):
-        #todo
-        raise NotImplementedError
+    def next(self, symbol, file):
+        if symbol.isprintable():
+            if symbol in self.tokens.values():
+                # TO DO
+            if symbol.isdigit():
+                # TO DO
+            if symbol.isnumeric():
+                # TO DO
+            else:
+                self.handle_error(file)
 
-    def get_token(self, symbol):
-        #get token                  easy
-        raise NotImplementedError
-    def handleError(self, col_nr):
-        #handleerror        1 line
-        raise NotImplementedError
+    def handle_error(self, file):
+        col_nr = file.tell()
+        file.close()
+        sys.exit(f'Incorrect token in column {col_nr}')
 
 def main():
-    if len(argv) == 1:
+    if len(sys.argv) == 1:
         print("No input file specified")
         return
-    filenames = argv[1:]
+    filenames = sys.argv[1:]
     file_scanner = Scanner()
     for filename in filenames:
         file_scanner.run(filename)
