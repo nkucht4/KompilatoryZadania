@@ -1,13 +1,19 @@
 from sys import argv
+import json
 
 class Scanner:
     def __init__(self):
-        #importujemy json z tokenami        1 line
-        raise NotImplementedError
+        with open("tokens/tokens.json", "r") as file:
+            self.tokens = json.load(file)
 
-    def run(self, file):
-        #run
-        raise NotImplementedError
+    def run(self, filename):
+        file = open(filename, "r")
+        while True:
+            symbol = file.read(1)
+            if not symbol:
+                break
+            ##print(symbol)
+        file.close()
 
     def next(self, symbol, col_nr):
         #todo
@@ -25,6 +31,9 @@ def main():
         print("No input file specified")
         return
     filenames = argv[1:]
+    file_scanner = Scanner()
+    for filename in filenames:
+        file_scanner.run(filename)
 
 if __name__ == "__main__":
     main()
