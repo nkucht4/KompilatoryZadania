@@ -16,18 +16,41 @@ class Scanner:
         file.close()
 
     def next(self, symbol, file):
-        if symbol.isprintable():
-            if symbol in self.tokens.values():
-                # TO DO
-            if symbol.isdigit():
-                # TO DO
-            if symbol.isnumeric():
-                # TO DO
-            else:
-                self.handle_error(file)
+        if not symbol.isspace():
+            if symbol in self.tokens.keys():
+                print(f'TOKEN {self.tokens[symbol]}: {symbol}')
 
-    def handle_error(self, file):
-        col_nr = file.tell()
+            elif symbol.isdigit():
+                start_col = file.tell()
+                nxt = file.read(1)
+                while (nxt.isdigit()):
+                    symbol += nxt
+                    nxt = file.read(1)
+                if nxt in self.tokens.keys() or not nxt:
+                    print(f'TOKEN LICZBA: {symbol}')
+                    if nxt:
+                        print(f'TOKEN {self.tokens[nxt]}: {nxt}')
+                else:
+                    self.handle_error(file, start_col)
+
+            elif symbol.isalpha():
+                start_col = file.tell()
+                nxt = file.read(1)
+                while (nxt.isalnum()):
+                    symbol += nxt
+                    nxt = file.read(1)
+                if nxt in self.tokens.keys() or not nxt:
+                    print(f'TOKEN IDENTYFIKATOR: {symbol}')
+                    if nxt:
+                        print(f'TOKEN {self.tokens[nxt]}: {nxt}')
+                else:
+                    self.handle_error(file, start_col)
+
+            else:
+                col_nr = file.tell()
+                self.handle_error(file, col_nr)
+
+    def handle_error(self, file, col_nr):
         file.close()
         sys.exit(f'Incorrect token in column {col_nr}')
 
