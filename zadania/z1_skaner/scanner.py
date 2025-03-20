@@ -26,11 +26,9 @@ class Scanner:
                 while (nxt.isdigit()):
                     symbol += nxt
                     nxt = file.read(1)
-                while nxt.isspace():
-                    nxt = file.read(1)
-                if nxt in self.tokens.keys() or not nxt:
+                if nxt in self.tokens.keys() or not nxt or nxt.isspace():
                     print(f'TOKEN LICZBA: {symbol}')
-                    if nxt:
+                    if nxt and not nxt.isspace():
                         print(f'TOKEN {self.tokens[nxt]}: {nxt}')
                 elif not nxt.isspace():
                     self.handle_error(file, start_col)
@@ -41,11 +39,9 @@ class Scanner:
                 while (nxt.isalnum()):
                     symbol += nxt
                     nxt = file.read(1)
-                while nxt.isspace():
-                    nxt = file.read(1)
-                if nxt in self.tokens.keys() or not nxt:
+                if nxt in self.tokens.keys() or not nxt or nxt.isspace():
                     print(f'TOKEN IDENTYFIKATOR: {symbol}')
-                    if nxt:
+                    if nxt and not nxt.isspace():
                         print(f'TOKEN {self.tokens[nxt]}: {nxt}')
                 else:
                     self.handle_error(file, start_col)
