@@ -26,11 +26,13 @@ class Scanner:
                 while (nxt.isdigit()):
                     symbol += nxt
                     nxt = file.read(1)
+                while nxt.isspace():
+                    nxt = file.read(1)
                 if nxt in self.tokens.keys() or not nxt:
                     print(f'TOKEN LICZBA: {symbol}')
                     if nxt:
                         print(f'TOKEN {self.tokens[nxt]}: {nxt}')
-                else:
+                elif not nxt.isspace():
                     self.handle_error(file, start_col)
 
             elif symbol.isalpha():
@@ -38,6 +40,8 @@ class Scanner:
                 nxt = file.read(1)
                 while (nxt.isalnum()):
                     symbol += nxt
+                    nxt = file.read(1)
+                while nxt.isspace():
                     nxt = file.read(1)
                 if nxt in self.tokens.keys() or not nxt:
                     print(f'TOKEN IDENTYFIKATOR: {symbol}')
@@ -49,7 +53,6 @@ class Scanner:
             else:
                 col_nr = file.tell()
                 self.handle_error(file, col_nr)
-
     def handle_error(self, file, col_nr):
         file.close()
         sys.exit(f'Incorrect token in column {col_nr}')
@@ -59,6 +62,7 @@ def main():
         print("No input file specified")
         return
     filenames = sys.argv[1:]
+
     file_scanner = Scanner()
     for filename in filenames:
         file_scanner.run(filename)
