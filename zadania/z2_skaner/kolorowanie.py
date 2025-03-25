@@ -64,7 +64,9 @@ class Scanner:
                 symbol += file.read(1)
                 nxt = self.next(file)
                 if nxt and nxt == '\'':
-
+                    symbol += file.read(1)
+                    return ("YELLOW", symbol)
+            return self.handle_error("Expected string closing token")
 
         # DIGITS
         elif symbol.isdigit():
