@@ -1,18 +1,20 @@
 import sys
 import json
 class Scanner:
-    def __init__(self, in_filename, out_filename):
+    def __init__(self):
         with open("tokens/tokens.json", "r") as file:
             self.tokens = json.load(file)
-            file = open(in_filename, "r")
-            while True:
-                symbol = file.read(1)
-                if not symbol:
-                    break
-                token = self.next(symbol, file)
-            file.close()
 
-    def run(self):
+    def run(self, in_filename, out_filename):
+        file = open(in_filename, "r")
+        while True:
+            symbol = file.read(1)
+            if not symbol:
+                break
+            token = self.scan(symbol, file)
+        file.close()
+
+    def scan(self, symbol, file):
         raise NotImplementedError
 
 def main():
