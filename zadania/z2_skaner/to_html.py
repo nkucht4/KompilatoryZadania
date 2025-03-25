@@ -25,7 +25,8 @@ class ToHtml:
         file.write('<title>Kolorowy kod</title>')
         file.write('<meta charset="utf-8"/>\n')
         file.write('</head>\n')
-        file.write(f'<body style="background-color:{background_colour}; font-family: \'Cascadia Mono\'; font-size: 16px;">\n')
+        file.write(f'<body style="background-color:{background_colour}; '
+                   f'font-family: \'Cascadia Mono\'; font-size: 16px;">\n')
         return file
 
     def adding_token(self, file, token):
