@@ -1,14 +1,7 @@
-{ "green" : {
-  "+": "ADD",
-  "-": "SUBTRACT",
-  "*": "MULTIPLY",
-  "/": "DIVIDE",
-  "(": "LEFT_PAR",
-  ")": "RIGHT_PAR",
-  ";": "SEMICOLON",
+{ "GREEN" : {
   "AND": "AND_T",
   "OR": "OR_T"
-}, "blue" : {
+}, "BLUE" : {
 "SELECT": "SELECT_T",
 "FROM": "FROM_T",
 "WHERE" : "WHERE_T",
@@ -20,7 +13,7 @@
 "INTO": "INTO_T",
 "DELETE": "DELETE_T",
 "UPDATE": "UPDATE_T"
-}, "pink" :
+}, "PINK" :
 {
 "VALUES": "VALUES_T",
 "JOIN": "JOIN_T",
@@ -34,13 +27,13 @@
 "IN": "IN_T",
 "LIKE": "LIKE_T",
 "BETWEEN": "BETWEEN_T"
-},"purple":
+},"PURPLE":
 {
 "UNION": "UNION_T",
 "EXCEPT": "EXCEPT_T",
 "INTERSECT": "INTERSECT_T"
 },
-  "grey" : {
+  "GREY" : {
     "/*" : "COMMENT",
     "*/" : "COMMENT_CLOSE"
   }

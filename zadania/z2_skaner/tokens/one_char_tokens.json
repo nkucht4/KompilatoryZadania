@@ -1,0 +1,12 @@
+{
+  "+": "ADD",
+  "-": "SUBTRACT",
+  "*": "MULTIPLY",
+  "/": "DIVIDE",
+  "(": "LEFT_PAR",
+  ")": "RIGHT_PAR",
+  ";": "SEMICOLON",
+  "=": "EQUALS",
+  ">": "GREATER_THAN",
+  "<": "LESS_THAN"
+}
