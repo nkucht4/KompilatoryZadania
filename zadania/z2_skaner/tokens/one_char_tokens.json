@@ -5,5 +5,8 @@
   "/": "DIVIDE",
   "(": "LEFT_PAR",
   ")": "RIGHT_PAR",
-  ";": "SEMICOLON"
+  ";": "SEMICOLON",
+  "=": "EQUALS",
+  ">": "GREATER_THAN",
+  "<": "LESS_THAN"
 }
