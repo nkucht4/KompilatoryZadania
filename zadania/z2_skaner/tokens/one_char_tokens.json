@@ -1,0 +1,9 @@
+{
+  "+": "ADD",
+  "-": "SUBTRACT",
+  "*": "MULTIPLY",
+  "/": "DIVIDE",
+  "(": "LEFT_PAR",
+  ")": "RIGHT_PAR",
+  ";": "SEMICOLON"
+}
