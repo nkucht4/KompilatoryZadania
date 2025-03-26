@@ -11,6 +11,7 @@ class ToHtml:
                         'RED': '#ff0000',
                         'DEFAULT': '#000000',
                         'WHITE': '#ffffff'}
+        self.file = ""
 
     def start(self, filename, dark_mode=False):
         if dark_mode:
@@ -18,18 +19,19 @@ class ToHtml:
             self.colours['#ffffff'] = background_colour
         else:
             background_colour = '#ffffff'
-        file = open(filename, 'a')
-        file.write('<!DOCTYPE html>\n')
-        file.write('<html lang="en">\n')
-        file.write('<head>\n')
-        file.write('<title>Kolorowy kod</title>')
-        file.write('<meta charset="utf-8"/>\n')
-        file.write('</head>\n')
-        file.write(f'<body style="background-color:{background_colour}; '
+        self.file = open(filename, 'a')
+        self.file.truncate(0)
+        self.file.write('<!DOCTYPE html>\n')
+        self.file.write('<html lang="en">\n')
+        self.file.write('<head>\n')
+        self.file.write('<title>Kolorowy kod</title>')
+        self.file.write('<meta charset="utf-8"/>\n')
+        self.file.write('</head>\n')
+        self.file.write(f'<body style="background-color:{background_colour}; '
                    f'font-family: \'Cascadia Mono\'; font-size: 16px;">\n')
-        return file
+        return self.file
 
-    def adding_token(self, file, token):
+    def adding_token(self, token):
         colour, t = token
         if colour == "WHITE":
             t = t.replace('\t', '&nbsp;')
@@ -41,9 +43,9 @@ class ToHtml:
             colour = self.colours[colour]
         else:
             colour = self.colours['DEFAULT']
-        file.write(f'<span style="color:{colour}">{t}</span>\n')
+        self.file.write(f'<span style="color:{colour}">{t}</span>\n')
 
-    def close(self, file):
-        file.write('</body>\n')
-        file.write('</html>\n')
-        file.close()
+    def close(self):
+        self.file.write('</body>\n')
+        self.file.write('</html>\n')
+        self.file.close()
