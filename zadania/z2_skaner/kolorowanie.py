@@ -1,5 +1,6 @@
 import sys
 import json
+from to_html import ToHtml
 class Scanner:
     def __init__(self):
         with open("tokens/long_tokens.json", "r") as file:
@@ -18,13 +19,17 @@ class Scanner:
     def run(self, in_filename, out_filename):
         self.line_counter = 0
         file = open(in_filename, "r")
+        HtmlConverter = ToHtml()
+        out_file = HtmlConverter.start(out_filename)
         while True:
             symbol = file.read(1)
             if not symbol:
                 break
             token = self.scan(symbol, file)
-            print(token)
+            if token:
+                HtmlConverter.adding_token(out_file, token)
         file.close()
+        HtmlConverter.close(out_file)
 
     def scan(self, symbol, file):
         if symbol == '\n':
@@ -51,11 +56,11 @@ class Scanner:
                             return ("GREY", symbol)
                 return ("GREY", symbol)
             else:
-                return ("GREEN", symbol)
+                return ("DARK_GREEN", symbol)
 
         # JEDNOZNAKOWE OPERATORY
         elif symbol in self.one_char_tokens.keys():
-            return ("GREEN", symbol)
+            return ("DARK_GREEN", symbol)
 
         #STRINGS
         elif symbol == '\'':
@@ -91,7 +96,7 @@ class Scanner:
         #LONG
         elif symbol.isalpha():
             nxt = self.next(file)
-            while (nxt.isalnum()) or nxt == '.':
+            while (nxt.isalnum()) or nxt in '._':
                 symbol += file.read(1)
                 nxt = self.next(file)
             if nxt.isspace() or nxt in self.one_char_tokens.keys() or not nxt or nxt == '\n':
