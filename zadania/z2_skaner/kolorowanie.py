@@ -27,9 +27,9 @@ class Scanner:
                 break
             token = self.scan(symbol, file)
             if token:
-                self.HtmlConverter.adding_token(out_file, token)
+                self.HtmlConverter.adding_token(token)
         file.close()
-        self.HtmlConverter.close(out_file)
+        self.HtmlConverter.close()
 
     def scan(self, symbol, file):
         if symbol == '\n':
@@ -119,8 +119,8 @@ class Scanner:
         return nxt_char
 
     def handle_error(self, message):
-        self.HTMLConverter.adding_token(('RED', f'Lexical error at line: {self.line_counter}: {message}'))
-        self.HTMLConverter.close()
+        self.HtmlConverter.adding_token(('RED', f'Lexical error at line: {self.line_counter}: {message}'))
+        self.HtmlConverter.close()
         sys.exit("Scanning failed")
 
 def main():
