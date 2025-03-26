@@ -30,7 +30,7 @@ class Scanner:
                     print(f'TOKEN LICZBA: {symbol}')
                     if nxt and not nxt.isspace():
                         print(f'TOKEN {self.tokens[nxt]}: {nxt}')
-                elif not nxt.isspace():
+                elif not nxt.isspace() or:
                     self.handle_error(file, start_col)
 
             elif symbol.isalpha():

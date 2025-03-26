@@ -14,22 +14,22 @@ class Scanner:
             for v in i.values():
                 self.token_to_color[v] = k
             self.long_tokens.update(i)
+        self.HtmlConverter = ToHtml()
 
 
     def run(self, in_filename, out_filename):
         self.line_counter = 0
         file = open(in_filename, "r")
-        HtmlConverter = ToHtml()
-        out_file = HtmlConverter.start(out_filename)
+        out_file = self.HtmlConverter.start(out_filename)
         while True:
             symbol = file.read(1)
             if not symbol:
                 break
             token = self.scan(symbol, file)
             if token:
-                HtmlConverter.adding_token(out_file, token)
+                self.HtmlConverter.adding_token(out_file, token)
         file.close()
-        HtmlConverter.close(out_file)
+        self.HtmlConverter.close(out_file)
 
     def scan(self, symbol, file):
         if symbol == '\n':
@@ -71,7 +71,8 @@ class Scanner:
                 if nxt and nxt == '\'':
                     symbol += file.read(1)
                     return ("YELLOW", symbol)
-            return self.handle_error("Expected string closing token")
+            file.close()
+            self.handle_error("Expected string closing token")
 
         # DIGITS
         elif symbol.isdigit():
@@ -80,7 +81,8 @@ class Scanner:
             while nxt.isdigit() or nxt == '.':
                 if nxt == '.':
                     if is_float == True:
-                        return self.handle_error("Unexpected \'.\'")
+                        file.close()
+                        self.handle_error("Unexpected \'.\'")
                     else:
                         is_float = True
                 symbol += file.read(1)
@@ -91,7 +93,8 @@ class Scanner:
                 else:
                     return ("ORANGE", symbol)
             else:
-                return self.handle_error(f'Unexpected token \"{nxt}\"')
+                file.close()
+                self.handle_error(f'Unexpected token \"{nxt}\"')
 
         #LONG
         elif symbol.isalpha():
@@ -105,7 +108,8 @@ class Scanner:
                 else:
                     return ("DEFAULT", symbol)
             else:
-                return self.handle_error(f'Unexpected token \"{nxt}\"')
+                file.close()
+                self.handle_error(f'Unexpected token \"{nxt}\"')
 
 
     def next(self, file):
@@ -115,7 +119,9 @@ class Scanner:
         return nxt_char
 
     def handle_error(self, message):
-        return ('RED', f'Lexical error at line: {self.line_counter}: {message}')
+        self.HTMLConverter.adding_token(('RED', f'Lexical error at line: {self.line_counter}: {message}'))
+        self.HTMLConverter.close()
+        sys.exit("Scanning failed")
 
 def main():
     if len(sys.argv) == 1:
